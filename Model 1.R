@@ -18,7 +18,7 @@ test_data <- insurance_data[-train_indices, ]
 # Define the Bayesian Logistic Regression model
 # Use predictors from the dataset (modify the formula as needed)
 bayesian_model <- brm(
-  formula = fraud_reported ~ age + incident_hour_of_the_day + policy_deductable + property_damage + bodily_injuries + police_report_available + total_claim_amount + incident_severity_Minor.Damage + incident_severity_Total.Loss + 
+  formula = fraud_reported ~ age + incident_hour_of_the_day + policy_deductable + policy_csl + policy_annual_premium + property_damage + bodily_injuries + police_report_available + total_claim_amount + incident_severity_Minor.Damage + incident_severity_Total.Loss + 
     incident_severity_Trivial.Damage + collision_type_Rear.Collision + umbrella_limit + witnesses + number_of_vehicles_involved + collision_type_Side.Collision + insured_education_level, 
   
   data = train_data,
@@ -43,7 +43,7 @@ bayesian_model <- brm(
     prior(uniform(0,24), class="b", coef="incident_hour_of_the_day"),
     prior(lognormal(log(60000), .5), class="b", coef="total_claim_amount"),
     prior(normal(1,.5), class="b", coef="number_of_vehicles_involved"), # or categorical as discussed above
-    prior(lognormal(log(200000), .5), class="b", coef="umbrella_limit"),
+    prior(lognormal(log(200000), .5), class="b", coef="umbrella_limit")
     # prior(categorical(c(1/3,1/3,1/3)), class ="b" ,coef= "bodily_injuries") # or treat separately
     # prior(categorical(c(.25,.25,.25,.25)),class ="b" ,coef= "witnesses")
   ),
